@@ -1,19 +1,20 @@
 import arxiv
+import os
 import pandas as pd
 
 
 def search_articles(query, outpath, max_retries=10):
+    
     retries = 0
-
     while retries < max_retries:
         client = arxiv.Client(
-            page_size=10,
-            delay_seconds=4,
-            num_retries=30,
+            page_size=30,
+            delay_seconds=5,
+            num_retries=50,
         )
         search = arxiv.Search(
             query=query,
-            max_results=10,
+            max_results=2,
         )
 
         data = []
@@ -27,7 +28,7 @@ def search_articles(query, outpath, max_retries=10):
             data.append(paper_data)
 
         out = pd.DataFrame(data)
-
+        
         if not out.empty:
             out.to_csv(outpath, index=False)
             return out
@@ -37,6 +38,7 @@ def search_articles(query, outpath, max_retries=10):
     out.to_csv(outpath, index=False)
 
     return out
+
 
 def download_articles(inpath, outpath):
 
@@ -52,7 +54,17 @@ def download_articles(inpath, outpath):
         id_list=id_list
     )
 
+    os.makedirs(outpath, exist_ok=True)
     for result in client.results(search):
         result.download_pdf(dirpath=outpath)
     
     return
+
+
+if __name__ == '__main__':
+
+    raw_data_path = './data/raw'
+    os.makedirs(raw_data_path, exist_ok=True)
+
+    search_articles("generative ai", outpath=f'{raw_data_path}/result_df.csv')
+    download_articles(inpath=f'{raw_data_path}/result_df.csv', outpath=f'{raw_data_path}/pdf_articles')
