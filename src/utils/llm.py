@@ -92,13 +92,3 @@ def estimate_cost(messages, model='gpt-3.5-turbo', max_tokens=512):
     msg = f'Total tokens (input + max output): {num_tokens+max_tokens}; cost estimate: {cost_estimate} dollars.'
     
     return msg
-
-
-if __name__ == '__main__':
-
-    raw_data_path = './data/raw'    
-    processed_data_path = './data/processed'
-    db_data_path = './data/.chromadb'
-
-    response, prompt, log = ask('what are the latest trends in large language models and generative ai?', raw_data_path, processed_data_path, db_data_path)
-    print(response)

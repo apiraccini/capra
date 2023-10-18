@@ -1,14 +1,15 @@
 import gradio as gr
-import os
+from pathlib import Path
 
 from utils.articles import search_articles, download_articles
 from utils.llm import ask
 
-raw_data_path = './data/raw'
-os.makedirs(raw_data_path, exist_ok=True)
-processed_data_path = './data/processed'
-db_data_path = './data/.chromadb'
+data_path = Path('./data')
+raw_data_path = data_path / 'raw'
+processed_data_path = data_path / 'processed'
+db_data_path = data_path / '.chromadb'
 
+raw_data_path.mkdir(parents=True, exist_ok=True)
 
 with gr.Blocks(gr.themes.Soft()) as demo:
 
@@ -21,8 +22,8 @@ with gr.Blocks(gr.themes.Soft()) as demo:
         search_results = gr.Dataframe(headers=['title', 'authors', 'abstract', 'entry_id'])
         download_btn = gr.Button(value='Download articles')
 
-        query_btn.click(fn=lambda x: search_articles(x, outpath=f'{raw_data_path}/result_df.csv'), inputs=query, outputs=search_results)
-        download_btn.click(fn=lambda: download_articles(inpath=f'{raw_data_path}/result_df.csv', outpath=f'{raw_data_path}/pdf_articles'))
+        query_btn.click(fn=lambda x: search_articles(x, outpath=raw_data_path / 'result_df.csv'), inputs=query, outputs=search_results)
+        download_btn.click(fn=lambda: download_articles(inpath=raw_data_path / 'result_df.csv', outpath=raw_data_path / 'pdf_articles'))
 
 
     with gr.Tab(label='Ask Capra'):

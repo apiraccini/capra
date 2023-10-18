@@ -1,5 +1,4 @@
 import arxiv
-import os
 import pandas as pd
 
 
@@ -54,17 +53,8 @@ def download_articles(inpath, outpath):
         id_list=id_list
     )
 
-    os.makedirs(outpath, exist_ok=True)
+    outpath.makedir(parents=True, exist_ok=True)
     for result in client.results(search):
         result.download_pdf(dirpath=outpath)
     
     return
-
-
-if __name__ == '__main__':
-
-    raw_data_path = './data/raw'
-    os.makedirs(raw_data_path, exist_ok=True)
-
-    search_articles("generative ai", outpath=f'{raw_data_path}/result_df.csv')
-    download_articles(inpath=f'{raw_data_path}/result_df.csv', outpath=f'{raw_data_path}/pdf_articles')
