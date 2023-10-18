@@ -4,7 +4,7 @@ import openai
 
 from dotenv import load_dotenv
 
-from corpus import get_or_create_corpus
+from .corpus import get_or_create_corpus
 
 
 def ask(question, raw_data_path, processed_data_path, db_data_path):

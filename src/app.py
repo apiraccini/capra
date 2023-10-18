@@ -6,6 +6,9 @@ from utils.llm import ask
 
 raw_data_path = './data/raw'
 os.makedirs(raw_data_path, exist_ok=True)
+processed_data_path = './data/processed'
+db_data_path = './data/.chromadb'
+
 
 with gr.Blocks(gr.themes.Soft()) as demo:
 
@@ -33,7 +36,7 @@ with gr.Blocks(gr.themes.Soft()) as demo:
             log = gr.Markdown()
             prompt = gr.Markdown()
 
-    ask_btn.click(fn=ask, inputs=question, outputs=[response, prompt, log], api_name="capra_answer")
+    ask_btn.click(fn=lambda x: ask(x, raw_data_path, processed_data_path, db_data_path), inputs=question, outputs=[response, prompt, log], api_name="capra_answer")
 
 
 if __name__ == '__main__':
