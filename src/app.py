@@ -12,7 +12,7 @@ db_data_path = './data/.chromadb'
 
 with gr.Blocks(gr.themes.Soft()) as demo:
 
-    gr.Markdown('# CAPRA - Context-enhanced AI Powered Research Assistant')
+    gr.Markdown('# CAPRA - Context-enhanced AI Powered Research Assistant 🐑')
 
     with gr.Tab(label='Search for your references'):
 

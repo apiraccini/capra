@@ -1,4 +1,4 @@
-# CAPRA - Context AI Powered Research Assistant
+# CAPRA - Context AI Powered Research Assistant 🐑
 
 Concept:
 - search for articles on arxiv
